@@ -10,13 +10,15 @@ class LeapYear {
     constructor(year) {
         this.year = year;
     }
-    
+
     /**
      * Determines if the year is a leap year
-     * @returns {boolean} true || false
+     * @returns {boolean}
      */
 
     isLeapYear() {
         return this.year % 100 === 0 ? this.year % 400 === 0 : this.year % 4 === 0;
     }
 }
+
+module.exports = LeapYear;

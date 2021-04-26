@@ -1,49 +1,43 @@
-/**
- * Day object
- */
-
-// Determine the number of weeks from the start of the year til today
-function getWeekNumber(date) {
-    const firstDayOfTheYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfTheYear) / 86400000;
-
-    return Math.ceil((pastDaysOfYear + firstDayOfTheYear.getDay() + 1) /7 ); 
-}
-
-// Determine whether the year is a leap year
-function isLeapYear(year) {
-    return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
-}
+const LeapYear = require('./common/LeapYear');
 
 /**
- * Day object
- * @params {Date} date (optional)
- * @params {string} lang (optional)
+ * Day
  */
 
 class Day {
+    /**
+     * Initialise day properties 
+     * @param {Date} date 
+     * @param {string} lang 
+     */
     constructor(date = null, lang = 'default') {
         date = date ?? new Date();
-
         this.Date = date;
         this.date = date.getDate();
         this.day = date.toLocaleString(lang, { weekday: 'long' });
         this.dayNumber = date.getDate() + 1;
         this.dayShort = date.toLocaleString(lang, { weekday: 'short' });
         this.year = date.getFullYear();
-        this.yearShort = Number(
-            date.toLocaleString(lang, { year: '2-digit' })
-        );
+        this.yearShort = Number(date.toLocaleString(lang, { year: '2-digit' }));
         this.month = date.toLocaleString(lang, { month: 'long' });
         this.monthShort = date.toLocaleString(lang, { month: 'short' });
         this.timestamp = date.getTime();
         this.week = getWeekNumber(date);
     }
 
+    /**
+     * Property to determine whether todays date matches date inputted
+     * @returns {boolean} 
+     */
     get isToday(){
         return this.isEqualTo(new Date());
     }
 
+    /**
+     * Method to determine whether two dates are the same
+     * @param {*} date 
+     * @returns 
+     */
     isEqualTo(date) {
         date = date instanceof Day ? date.Date : date;
         
@@ -51,7 +45,12 @@ class Day {
             date.getMonth() === this.monthNumber - 1 &&
             date.getFullYear() === this.year;
     }
-
+    
+    /**
+     * Method to format the Day object
+     * @param {string} formatStr 
+     * @returns {string}
+     */
     format(formatStr) {
         return formatStr
             .replace(/\bYYYY\b/, this.year)
@@ -68,3 +67,5 @@ class Day {
 
 const day = new Day(null);
 console.log('-- day', day);
+const leapyear = new LeapYear(2000);
+console.log(leapyear.isLeapYear());
