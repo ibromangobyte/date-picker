@@ -17,8 +17,8 @@ function isLeapYear(year) {
 
 /**
  * Day object
- * @params : date (optional)
- * @params : lang (optional)
+ * @params {Date} date (optional)
+ * @params {string} lang (optional)
  */
 
 class Day {
